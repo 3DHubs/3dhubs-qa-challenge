@@ -5,7 +5,6 @@ The app tests uploading function of the page https://www.hubs.com/manufacture/
 Test scenarios include:
 - upload one file in correct type successfully
 - upload multiple files in correct types successfully
-- upload a file with complex design
 - upload a file in non design type
 - upload a file in stl type
 - upload an assembly file

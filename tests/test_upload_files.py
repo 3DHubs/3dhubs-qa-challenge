@@ -1,6 +1,5 @@
 import logging
 import os
-import re
 
 import pytest
 
@@ -8,7 +7,6 @@ from tests.page_model.manufacture_page import ManufacturePage
 from tests.page_model.quote_page import QuotePage
 
 EMAIL = 'xxxxxx@gmail.com'
-RFQ_MESSAGE = 'Total:\nRFQ'
 PATH_TO_XT_FILE = os.path.abspath(r'./uploaded_files/x_t_file.x_t')
 PATH_TO_IGES_FILE = os.path.abspath(r'./uploaded_files/iges_file.IGES')
 PATH_TO_STP_FILE = os.path.abspath(r'./uploaded_files/stp_file.STP')
@@ -18,7 +16,6 @@ PATH_TO_IGS_FILE = os.path.abspath(r'./uploaded_files/igs_file.IGS')
 PATH_TO_SAT_FILE = os.path.abspath(r'./uploaded_files/sat_file.SAT')
 PATH_TO_STEP_FILE = os.path.abspath(r'./uploaded_files/step_file.STEP')
 PATH_TO_MULTIPLE_FILES = PATH_TO_XT_FILE + ' \n ' + PATH_TO_IGES_FILE
-PATH_TO_COMPLEX_DESIGN_FILE = os.path.abspath(r'./uploaded_files/complex_design.STEP')
 PATH_TO_PNG_FILE = os.path.abspath(r'./uploaded_files/png_file.png')
 PATH_TO_STL_FILE = os.path.abspath(r'./uploaded_files/stl_file.STL')
 PATH_TO_ASSEMBLY_FILE = os.path.abspath(r'./uploaded_files/assembly.STP')
@@ -47,7 +44,7 @@ class TestUploadingFunction:
         quote_page.close_intro_dialog()
 
         assert quote_page.base_url in browser.current_url
-        assert quote_page.price.is_displayed() and bool(re.search(r'\d', quote_page.price.text))
+        assert quote_page.price.is_displayed()
         assert not quote_page.error_message_is_present
 
     def test_upload_multiple_files_together_successfully(self, browser):
@@ -66,26 +63,7 @@ class TestUploadingFunction:
         quote_page.close_intro_dialog()
 
         assert quote_page.base_url in browser.current_url
-        assert quote_page.price.is_displayed() and bool(re.search(r'\d', quote_page.price.text))
-        assert not quote_page.error_message_is_present
-
-    def test_upload_a_file_with_complex_design(self, browser):
-        """
-        The method tests that a design file with complex design in correct type can be uploaded successfully. After
-        uploading, browser will switch from manufacture page to the quote page, RFQ message instead of price will be
-        shown, and there is no error message in quote page.
-        :param browser: fixture
-        :return: None
-        """
-        manufacture_page = ManufacturePage(browser)
-        logger.info('uploading a file with complex design...')
-        manufacture_page.upload_file(PATH_TO_COMPLEX_DESIGN_FILE, EMAIL)
-
-        quote_page = QuotePage(browser)
-        quote_page.close_intro_dialog()
-
-        assert quote_page.base_url in browser.current_url
-        assert quote_page.price.is_displayed() and quote_page.price.text == RFQ_MESSAGE
+        assert quote_page.price.is_displayed()
         assert not quote_page.error_message_is_present
 
     def test_upload_file_in_non_design_type(self, browser):
