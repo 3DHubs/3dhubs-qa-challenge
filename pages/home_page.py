@@ -12,3 +12,7 @@ class HomePage(BasePage):
     def open_login_page(self):
         self.page.locator('//span[@class="material-icons h3d-navbar__user-avatar"]').click()
         self.page.locator('//a[@href="/manufacture/login"]').click()
+
+    @allure.step
+    def get_instant_quote(self):
+        self.page.locator('//div[@id="navbar__menu"]//a[@e2e="static_get_quote_header"]').click()

@@ -1,7 +1,9 @@
+import pytest
 from playwright.sync_api import Page
 
 
-def test_model_upload(page: Page, home, login, orders, manufacture, quote):
+@pytest.mark.parametrize('technology', ['cnc_machining', 'sheet_metal'])
+def test_model_upload_with_login(page: Page, home, login, orders, manufacture, quote, technology):
     email = 'leciva9604@sunetoa.com'
     password = '.@Xn8SUW6*Kcg9B'
 
@@ -13,10 +15,24 @@ def test_model_upload(page: Page, home, login, orders, manufacture, quote):
     orders.close_walkthrough_popup()
     orders.click_new_quote()
 
-    manufacture.select_sheet_metal()
-    manufacture.select_file()
+    manufacture.select_technology(technology=technology)
+    manufacture.select_file(technology=technology)
     manufacture.agree_with_policy()
 
     quote.close_walkthrough_popup()
     quote.assert_quote_is_created()
-    page.screenshot(path='screenshot.png', full_page=True)
+    page.screenshot(path=f'screenshots/model_upload_with_login_{technology}.png', full_page=True)
+
+
+@pytest.mark.parametrize('technology', ['cnc_machining', 'sheet_metal'])
+def test_model_upload_without_login(page: Page, home, manufacture, quote, technology):
+    home.open_home_page()
+    home.get_instant_quote()
+
+    manufacture.select_technology(technology=technology)
+    manufacture.select_file(technology=technology)
+    manufacture.fill_in_email_in_popup()
+
+    quote.close_walkthrough_popup()
+    quote.assert_quote_is_created()
+    page.screenshot(path=f'screenshots/model_upload_without_login_{technology}.png', full_page=True)

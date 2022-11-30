@@ -1,6 +1,8 @@
 # 3dhubs-qa-challenge
 This is a repository for hubs.com autotests.
 
+Test framework was built using pytest and Playwright.
+
 Set up interpreter inside pipenv
 
 `pip install --user pipenv`
