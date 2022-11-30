@@ -1,37 +1,22 @@
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page
 
 
-def test_model_upload(page: Page):
-    email = 'ruff3110@gmail.com'
-    password = 'XF@vhGZj98VK.y-'
+def test_model_upload(page: Page, home, login, orders, manufacture, quote):
+    email = 'leciva9604@sunetoa.com'
+    password = '.@Xn8SUW6*Kcg9B'
 
-    # open home page
-    page.goto('https://www.hubs.com/')
+    home.open_home_page()
+    home.open_login_page()
 
-    # open login page
-    page.locator('//span[@class="material-icons h3d-navbar__user-avatar"]').click()
-    page.locator('//a[@href="/manufacture/login"]').click()
-    # type email and password and click Log in
-    page.locator('//input[@type="email"]').fill(email)
-    page.locator('//input[@type="password"]').fill(password)
-    page.locator('//button[@type="submit"]').click()
+    login.fill_in_credentials_and_submit(email, password)
 
-    # on Orders page click popup
-    page.locator('//button[@data-test="walkthrough-dialog-close-button"]').click()
-    # Click New quote
-    page.locator('//div[@data-test="h3d-navbar__new-quote"]').click()
+    orders.close_walkthrough_popup()
+    orders.click_new_quote()
 
-    # select Sheet metal
-    page.locator('//h3d-card[@data-test="technology-item-sheet-metal"]').click()
-    # select file
-    page.locator('//input[@id="file-btn"]').set_input_files('test_data/sheet_metal_sample.step')
+    manufacture.select_sheet_metal()
+    manufacture.select_file()
+    manufacture.agree_with_policy()
 
-    # Click Agree with Terms
-    page.locator('//button[contains(@class, "agree-and-upload")]').click()
-
-    # close popup
-    page.locator('//button[@data-test="walkthrough-dialog-close-button"]').click()
-    # assert quote is created
-    expect(page.locator('//div[@data-test="order-toolbar-title"]')).to_have_text('Untitled quote', timeout=60000)
-    expect(page.locator('//div[@class="line-items"]//h4')).to_have_text('Parts & specifications', timeout=60000)
+    quote.close_walkthrough_popup()
+    quote.assert_quote_is_created()
     page.screenshot(path='screenshot.png', full_page=True)
