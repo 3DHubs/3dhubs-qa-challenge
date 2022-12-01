@@ -3,7 +3,7 @@ This is a repository for hubs.com autotests.
 
 Test framework was built using pytest and Playwright.
 
-Set up interpreter inside pipenv
+## Set up interpreter inside pipenv
 
 `pip install --user pipenv`
 
@@ -11,12 +11,15 @@ Set up interpreter inside pipenv
 
 `playwright install` - to install browser drivers
 
+## Running tests
 `pipenv run pytest` - to run tests
 
 By default, Playwright runs tests in headless mode.
 To run tests in headed mode, please use
 
 `pipenv run pytest --headed`
+
+## Allure reports
 
 To use Allure as a report tool, install it following instructions from here:
 

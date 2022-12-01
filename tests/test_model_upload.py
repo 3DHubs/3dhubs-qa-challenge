@@ -36,3 +36,12 @@ def test_model_upload_without_login(page: Page, home, manufacture, quote, techno
     quote.close_walkthrough_popup()
     quote.assert_quote_is_created()
     page.screenshot(path=f'screenshots/model_upload_without_login_{technology}.png', full_page=True)
+
+
+def test_model_upload_with_wrong_format(page: Page, home, manufacture):
+    home.open_home_page()
+    home.get_instant_quote()
+
+    manufacture.select_wrong_format_file()
+    manufacture.expect_wrong_format_error()
+    page.screenshot(path=f'screenshots/model_upload_with_wrong_format.png', full_page=True)

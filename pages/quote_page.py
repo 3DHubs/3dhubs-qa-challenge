@@ -7,7 +7,7 @@ from pages.base_page import BasePage
 class QuotePage(BasePage):
     @allure.step
     def close_walkthrough_popup(self):
-        self.page.locator('//button[@data-test="walkthrough-dialog-close-button"]').click(timeout=60000)
+        self.page.locator('//button[@data-test="walkthrough-dialog-close-button"]').click()
 
     @allure.step
     def assert_quote_is_created(self):

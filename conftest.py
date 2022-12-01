@@ -8,15 +8,13 @@ from pages.orders_page import OrdersPage
 from pages.quote_page import QuotePage
 
 
-@pytest.fixture(scope="session", autouse=True)
-def browser_context_args(browser_context_args):
-    return {
-        **browser_context_args,
-        "viewport": {
-            "width": 1536,
-            "height": 754,
-        }
-    }
+@pytest.fixture(autouse=True)
+def set_default_timeout_and_viewport_size(page):
+    # pages often load slowly
+    page.set_default_timeout(timeout=90000)
+    # the closest size to maximized window
+    page.set_viewport_size({"width": 1536, "height": 754})
+    yield page
 
 
 @pytest.fixture
