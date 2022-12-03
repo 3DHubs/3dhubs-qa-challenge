@@ -1,0 +1,3 @@
+[WDM] - Current google-chrome version is 107.0.5304
+[WDM] - Get LATEST driver version for 107.0.5304
+[WDM] - Driver [C:\Users\s00815193\.wdm\drivers\chromedriver\win32\107.0.5304.62\chromedriver.exe] found in cache
